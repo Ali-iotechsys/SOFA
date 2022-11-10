@@ -1,0 +1,50 @@
+type User {
+    ID: ID!
+    Name: String!
+    Address: String!
+}
+
+type Group {
+    ID: ID!
+    Label: String!
+    Users: [User]
+}
+
+input NewUser {
+    Name: String!
+    Address: String!
+}
+
+input NewGroup {
+    Label: String!
+}
+
+input NewAssociation {
+    UserID: ID!
+    GroupID: ID!
+}
+
+input UserUpdate {
+    UserID: ID!
+    NewName: String
+    NewAddress: String
+}
+
+type Query {
+    Users(userIDs: [ID!]):[User]
+    Groups(groupIDs: [ID!]): [Group]
+}
+
+type Mutation {
+    CreateUser(input: NewUser!): User!
+    CreateGroup(input: NewGroup!): Group!
+    AssociateUserToGroup(input: NewAssociation!): Group!
+    UpdateUser(input: UserUpdate!): User!
+}
+
+type Subscription {
+    UserCreated: User
+    GroupCreated: Group
+    UserUpdated(userIDs: [ID!]): User
+    GroupUpdated(groupIDs: [ID!]): Group
+}
